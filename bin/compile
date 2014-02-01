@@ -171,9 +171,10 @@ cp -n ${LP_DIR}/.profile.d/* ${BUILD_DIR}/.profile.d/
 #erb $LP_DIR/conf/nginx.conf.erb > ${BUILD_DIR}/vendor/nginx/conf/nginx.conf
 
 echo "-----> running bundle install"
-cd rwww
-bundle install
-cd ..
+echo ${ls}
+#cd rwww
+#bundle install
+#cd ..
 
 
 echo "-----> Installing boot script"
