@@ -170,12 +170,6 @@ cp $LP_DIR/conf/nginx.conf.erb ${BUILD_DIR}/vendor/nginx/conf/nginx.conf.erb
 cp -n ${LP_DIR}/.profile.d/* ${BUILD_DIR}/.profile.d/
 #erb $LP_DIR/conf/nginx.conf.erb > ${BUILD_DIR}/vendor/nginx/conf/nginx.conf
 
-echo "-----> running bundle install"
-ls
-#cd rwww
-#bundle install
-#cd ..
-
 
 echo "-----> Installing boot script"
 cd $BUILD_DIR
@@ -238,10 +232,16 @@ touch /app/vendor/nginx/logs/access.log /app/vendor/nginx/logs/error.log /app/ve
 mkdir -p client_body_temp fastcgi_temp proxy_temp scgi_temp uwsgi_temp
 (tail -f -n 0 /app/vendor/nginx/logs/*.log /app/vendor/php/var/log/*.log &)
 
-echo "====> starting services <===="
+
 /app/vendor/php/sbin/php-fpm
 /app/vendor/nginx/sbin/nginx
+
+echo "=====> running bundle install <===="
+cd /app/rwww
+bundle install
+cd ..
 thin start -p 5000
+
 EOF
 chmod +x boot.sh
 
